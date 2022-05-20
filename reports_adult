@@ -1,0 +1,34 @@
+['roc_auc', 'recall', 'precision']
+'Fitness metric: roc_auc'
+('Start fitness score for DecisionTreeClassifier: [0.75164389 0.75126566 '
+ '0.75545803 0.74262481 0.7497807 ]')
+("Initial scores:{'fit_time': array([0.22898984, 0.22617054, 0.20336723, "
+ "0.21123457, 0.21015334]), 'score_time': array([0.02707052, 0.01319027, "
+ "0.01991773, 0.01364541, 0.01394439]), 'test_roc_auc': array([0.75164389, "
+ "0.75126566, 0.75545803, 0.74262481, 0.7497807 ]), 'train_roc_auc': "
+ 'array([0.99999999, 0.99999999, 0.99999999, 1.        , 0.99999997]), '
+ "'test_recall': array([0.87527316, 0.87474781, 0.87020847, 0.86735037, "
+ "0.86987223]), 'train_recall': array([0.99991594, 0.99991594, 0.99991594, "
+ "1.        , 0.99987391]), 'test_precision': array([0.88239281, 0.88216345, "
+ "0.88524029, 0.87857629, 0.88218244]), 'train_precision': array([1., 1., 1., "
+ '1., 1.])}')
+Task: classification
+For evolution selected model DecisionTreeClassifier with score [0.75164389 0.75126566 0.75545803 0.74262481 0.7497807 ]
+Current experiment: irregular-diamond-20-05-22
+fitness time (s): 20.870342254638672
+fitness time (s): 29.90830373764038
+Generation :  1
+fitness time (s): 30.95254373550415
+Fitness value of the best solution = 0.8973329311821633
+fitness time (s): 31.03357434272766
+Generation :  2
+fitness time (s): 30.885096788406372
+Fitness value of the best solution = 0.8973534008876409
+fitness time (s): 30.439821004867554
+Generation :  3
+fitness time (s): 30.41395378112793
+Fitness value of the best solution = 0.9011235441914544
+fitness time (s): 30.266194343566895
+Fitness value of the best solution = 0.9011235441914544
+Index of the best solution : 37
+--- 316.340763092041 seconds ---
