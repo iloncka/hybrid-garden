@@ -1,6 +1,6 @@
 import os
 import pickle
-import Path
+from pathlib import Path
 
 WORK_DIR = Path(__file__).parent 
 
