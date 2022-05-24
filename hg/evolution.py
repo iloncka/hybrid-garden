@@ -2,9 +2,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 import pygad
-import pmlb
 from multiprocessing import Pool
-from sklearn.model_selection import train_test_split
 import time
 import uuid
 import pickle
@@ -18,7 +16,7 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
-from initialisation import initialization
+from initialization import initialization
 from utils import save_model
 
 
@@ -81,50 +79,50 @@ def on_generation(ga_instance):
 
 def evolution(X, y, models=None, task=None):
 
-        if not models:
-            models = ['DecisionTreeClassifier']
-        task, model_name, model, scoring, fitness_metric = initialisation(X, y, models)
-        model, model_params, model_params_lst, gene_space = prepare_params(model_name,
-                                                                            model, X, 
-                                                                            task)
-        # print(model_params, model_params_lst) 
-                                                    
-        num_genes = len(gene_space)
-        num_mutations_high = int(num_genes / 2)
-        num_mutations_low = int(num_mutations_high / 3)
-        gene_type = np.int8
-        start_time = time.time()
+    if not models:
+        models = ['DecisionTreeClassifier']
+    task, model_name, model, scoring, fitness_metric = initialization(X, y, models)
+    model, model_params, model_params_lst, gene_space = prepare_params(model_name,
+                                                                        model, X, 
+                                                                        task)
+    # print(model_params, model_params_lst) 
+                                                
+    num_genes = len(gene_space)
+    num_mutations_high = int(num_genes / 2)
+    num_mutations_low = int(num_mutations_high / 3)
+    gene_type = np.int8
+    start_time = time.time()
 
-        current_run_id = ('{random_name}-{start_time}'
-                    .format(start_time=date.fromtimestamp(start_time).strftime('%d-%m-%y'),                                            
-                                                    random_name = randomname.get_name()))
-         
-        Path(os.path.join(WORK_DIR,'/artifacts/models/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
-        Path(os.path.join(WORK_DIR,'/artifacts/metadata/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
-        print('Current experiment:', current_run_id)                                            
-        ga_instance = PooledGA(num_generations=3,
-                            fitness_func=fitness_func,
-                            num_parents_mating=40,
-                            parent_selection_type="tournament",
-                            K_tournament=10,
-                            sol_per_pop=60,
-                            num_genes=num_genes,
-                            gene_space=gene_space,
-                            gene_type=gene_type,
-                            mutation_type="adaptive",
-                            mutation_num_genes=(num_mutations_high, num_mutations_low),
-                            on_generation=on_generation, 
-                            save_solutions=False,
-                            save_best_solutions=False,
-                            stop_criteria=["saturate_20"])
-        with Pool(processes=4) as pool:
-            ga_instance.run()
+    current_run_id = ('{random_name}-{start_time}'
+                .format(start_time=date.fromtimestamp(start_time).strftime('%d-%m-%y'),                                            
+                                                random_name = randomname.get_name()))
+        
+    Path(os.path.join(WORK_DIR,'/artifacts/models/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
+    Path(os.path.join(WORK_DIR,'/artifacts/metadata/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
+    print('Current experiment:', current_run_id)                                            
+    ga_instance = PooledGA(num_generations=3,
+                        fitness_func=fitness_func,
+                        num_parents_mating=40,
+                        parent_selection_type="tournament",
+                        K_tournament=10,
+                        sol_per_pop=60,
+                        num_genes=num_genes,
+                        gene_space=gene_space,
+                        gene_type=gene_type,
+                        mutation_type="adaptive",
+                        mutation_num_genes=(num_mutations_high, num_mutations_low),
+                        on_generation=on_generation, 
+                        save_solutions=False,
+                        save_best_solutions=False,
+                        stop_criteria=["saturate_20"])
+    with Pool(processes=4) as pool:
+        ga_instance.run()
 
-            solution, solution_fitness, solution_idx = ga_instance.best_solution()
-            print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-            print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
+        solution, solution_fitness, solution_idx = ga_instance.best_solution()
+        print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
+        print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
-            print("--- %s seconds ---" % (time.time() - start_time))
+        print("--- %s seconds ---" % (time.time() - start_time))
 
     
 

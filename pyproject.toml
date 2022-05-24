@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hybrid-garden"
+version = "0.1.0"
+description = ""
+authors = ["Ilona Kovaleva <ilona.kovaleva.ds@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "^1.22.4"
+scikit-learn = "^1.1.1"
+pygad = "^2.16.3"
+pmlb = "^1.0.1"
+randomname = "^0.1.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+ipykernel = "^6.13.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
