@@ -1,5 +1,8 @@
 import os
 import pickle
+import Path
+
+WORK_DIR = Path(__file__).parent 
 
 def save_model(clf, solution, solution_idx, fitness, scores, selected_features, gen_idx):
     
@@ -15,8 +18,8 @@ def save_model(clf, solution, solution_idx, fitness, scores, selected_features, 
                                                 model_name=model_name,
                                                 fitness=fitness,
                                                 model_id=model_id)
-    file_path = os.path.join(work_dir, model_path)
-    meta_path = os.path.join(work_dir, metadata_path)
+    file_path = os.path.join(WORK_DIR, model_path)
+    meta_path = os.path.join(WORK_DIR, metadata_path)
     model_meta = {}
     model_meta = {'current_run_id': current_run_id,
                 'file_path': file_path,

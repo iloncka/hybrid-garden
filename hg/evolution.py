@@ -18,8 +18,12 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
-from initialisation import initialisation
+from initialisation import initialization
 from utils import save_model
+
+
+WORK_DIR = Path(__file__).parent 
+print(WORK_DIR)
 
 def fitness_wrapper(solution):
     return fitness_func(solution, 0)
@@ -94,9 +98,9 @@ def evolution(X, y, models=None, task=None):
         current_run_id = ('{random_name}-{start_time}'
                     .format(start_time=date.fromtimestamp(start_time).strftime('%d-%m-%y'),                                            
                                                     random_name = randomname.get_name()))
-        work_dir = os.getcwd()  
-        Path(os.path.join(work_dir,'models/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
-        Path(os.path.join(work_dir,'metadata/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
+         
+        Path(os.path.join(WORK_DIR,'/artifacts/models/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
+        Path(os.path.join(WORK_DIR,'/artifacts/metadata/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
         print('Current experiment:', current_run_id)                                            
         ga_instance = PooledGA(num_generations=3,
                             fitness_func=fitness_func,

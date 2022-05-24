@@ -2,7 +2,7 @@ from models import get_available_models
 from models import get_models_for_task
 from metrics import get_model_scoring_metrics
 
-def initialisation(X, y, models=None, fitness_metric=None, template=None):
+def initialization(X, y, models=None, fitness_metric=None, template=None):
     
     if isinstance(y[1], float):
         task = 'regression'
