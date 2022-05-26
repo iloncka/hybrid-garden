@@ -1,25 +1,28 @@
 import os
 import pickle
 from pathlib import Path
+import config as cfg
 
-WORK_DIR = Path(__file__).parent 
+WORK_DIR = cfg.WORK_DIR
+MODELS_DIR = cfg.MODELS_DIR
+METADATA_DIR = cfg.METADATA_DIR
 
 def save_model(clf, solution, solution_idx, fitness, scores, selected_features, gen_idx):
     
     
     model_id = uuid.uuid4().hex
-    model_path = 'models/{current_run_id}/{model_name}_{fitness:.2f}_{model_id}.pickle'.format(
+    model_path = '/{current_run_id}/{model_name}_{fitness:.2f}_{model_id}.pickle'.format(
                                                 current_run_id=current_run_id,
                                                 model_name=model_name,
                                                 fitness=fitness,
                                                 model_id=model_id)
-    metadata_path = 'metadata/{current_run_id}/{model_name}_{fitness:.2f}_{model_id}.pickle'.format(
+    metadata_path = '/{current_run_id}/{model_name}_{fitness:.2f}_{model_id}.pickle'.format(
                                                 current_run_id=current_run_id,
                                                 model_name=model_name,
                                                 fitness=fitness,
                                                 model_id=model_id)
-    file_path = os.path.join(WORK_DIR, model_path)
-    meta_path = os.path.join(WORK_DIR, metadata_path)
+    file_path = os.path.join(MODELS_DIR, model_path)
+    meta_path = os.path.join(METADATA_DIR, metadata_path)
     model_meta = {}
     model_meta = {'current_run_id': current_run_id,
                 'file_path': file_path,

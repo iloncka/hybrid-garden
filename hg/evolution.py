@@ -19,10 +19,12 @@ warnings.filterwarnings('ignore')
 from initialization import initialization
 from utils import save_model
 from params import prepare_params
+import config as cfg
 
+WORK_DIR = cfg.WORK_DIR
+MODELS_DIR = cfg.MODELS_DIR
+METADATA_DIR = cfg.METADATA_DIR
 
-WORK_DIR = Path(__file__).parent 
-print(WORK_DIR)
 
 def fitness_wrapper(solution):
     return fitness_func(solution, 0)
@@ -98,8 +100,8 @@ def evolution(X, y, models=None, task=None):
                 .format(start_time=date.fromtimestamp(start_time).strftime('%d-%m-%y'),                                            
                                                 random_name = randomname.get_name()))
         
-    Path(os.path.join(WORK_DIR,'/artifacts/models/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
-    Path(os.path.join(WORK_DIR,'/artifacts/metadata/{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
+    Path(os.path.join(MODELS_DIR,'{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
+    Path(os.path.join(METADATA_DIR,'{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
     print('Current experiment:', current_run_id)                                            
     ga_instance = PooledGA(num_generations=3,
                         fitness_func=fitness_func,
@@ -132,7 +134,7 @@ def evolution(X, y, models=None, task=None):
 
     print("Number of generations passed is {generations_completed}".format(generations_completed=ga_instance.generations_completed))
     #  Saving the GA instance.
-    filename = '{current_run_id}'.format(current_run_id=current_run_id) # The filename to which the instance is saved. The name is without extension.
+    filename = os.path.join(WORK_DIR,'{current_run_id}'.format(current_run_id=current_run_id)) # The filename to which the instance is saved. The name is without extension.
     ga_instance.save(filename=filename)
     return current_run_id, solution, solution_fitness, solution_idx
 

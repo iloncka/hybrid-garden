@@ -11,7 +11,7 @@ class HybridGarden:
         self.n_trees = n_trees
         self.fitness_thresh = fitness_thresh
         self.models = models
-        self.task = task        
+        self.task = task               
         self.trees = []        
         self.metas = []
         self.features = []        
@@ -48,7 +48,7 @@ class HybridGarden:
 
 
     def fit(self, X, y):
-        current_run_id, solution, solution_fitness, solution_idx = evolution(X, y, models=None, task=None)        
+        current_run_id, solution, solution_fitness, solution_idx = evolution(X, y, self.models, self.task)        
         self.current_run_id = current_run_id        
         self.best_solution = solution
         self.solution_fitness = solution_fitness

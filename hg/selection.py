@@ -1,5 +1,11 @@
 import pandas as pd
 import os
+import config as cfg
+
+
+MODELS_DIR = cfg.MODELS_DIR
+METADATA_DIR = cfg.METADATA_DIR
+REPORTS_DIR = cfg.REPORTS_DIR
 
 def _create_plane_meta(nested_meta):
     plane_meta = {}
@@ -13,15 +19,15 @@ def _create_plane_meta(nested_meta):
 
 def get_trees(current_run_id, n_trees, fitness_thresh):
 
-    REPORTS_DIR = '../artifacts/reports/{current_run_id}'.format(current_run_id=current_run_id)
-    META_DIR = '../artifacts/metadata/{current_run_id}'.format(current_run_id=current_run_id)
-    MODELS_DIR = '../artifacts/models/{current_run_id}'.format(current_run_id=current_run_id)
+    REPORTS_DIR = os.path.join(REPORTS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
+    METADATA_DIR = os.path.join(METADATA_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
+    MODELS_DIR = os.path.join(MODELS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
     
-    meta_files = [name for name in os.listdir(META_DIR) if os.path.isfile(os.path.join(meta_dir, name))]
+    meta_files = [name for name in os.listdir(METADATA_DIR) if os.path.isfile(os.path.join(meta_dir, name))]
     
     all_metas = []
     for filename in meta_files:
-        with open(os.path.join(META_DIR, filename), 'rb') as f:
+        with open(os.path.join(METADATA_DIR, filename), 'rb') as f:
             # The protocol version used is detected automatically, so we do not
             # have to specify it.
             meta = pickle.load(f)
