@@ -3,6 +3,7 @@ from selection import get_trees, get_best_tree
 from utils import save_model
 from scipy import stats
 
+
 class HybridGarden:
     
     def __init__(self, n_trees=60, fitness_thresh=0.5, models=None, task=None):
@@ -71,8 +72,3 @@ class HybridGarden:
         return y_pred_proba
         
 
-if '__name__' == '__main__':
-    
-    
-    clf = HybridGarden()
-    print('ok')

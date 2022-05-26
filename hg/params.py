@@ -1,3 +1,5 @@
+import numpy as np
+
 def get_model_params(model_name, task='regression'):
     model_params = {
         'regression':{

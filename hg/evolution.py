@@ -18,6 +18,7 @@ warnings.filterwarnings('ignore')
 
 from initialization import initialization
 from utils import save_model
+from params import prepare_params
 
 
 WORK_DIR = Path(__file__).parent 
@@ -139,5 +140,5 @@ def evolution(X, y, models=None, task=None):
 # loaded_ga_instance = pygad.load(filename=filename)
 # loaded_ga_instance.plot_fitness()
 
-if '__name__' == '__main__':
-    evolution(X, y, models=None)
+# if '__name__' == '__main__':
+#     evolution(X, y, models=None)
