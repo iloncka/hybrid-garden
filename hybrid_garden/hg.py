@@ -2,9 +2,9 @@ import numpy as np
 from scipy import stats
 from collections import Counter
 
-import evolution as evo
-from selection import get_trees, get_best_tree
-from utils import save_model
+from . import evolution as evo
+from .selection import get_trees, get_best_tree
+from .utils import save_model
 
 
 

@@ -18,14 +18,11 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
-from initialization import initialization
-from utils import save_model
-from params import prepare_params
-import config as cfg
+from .initialization import initialization
+from .utils import save_model
+from .params import prepare_params
+from .config import WORK_DIR, MODELS_DIR, METADATA_DIR
 
-WORK_DIR = cfg.WORK_DIR
-MODELS_DIR = cfg.MODELS_DIR
-METADATA_DIR = cfg.METADATA_DIR
 
 
 model_params_lst = {}
@@ -71,11 +68,13 @@ def evolution(X, y, models=None, task=None, num_generations=3):
     solution_idx_gen = []
     solution_gen = []
     def on_generation(ga_instance):
-        print("Generation : ", ga_instance.generations_completed)
+        print(u"Поколение:", ga_instance.generations_completed)
+        print("Generation: ", ga_instance.generations_completed)
         solution, solution_fitness, solution_idx = ga_instance.best_solution()
         # solution_gen.append(solution)
         # solution_idx_gen.append(solution_idx)
-        # solution_fitness_gen.append(solution_fitness)    
+        # solution_fitness_gen.append(solution_fitness) 
+        print(u"Параметры лучшего алгоритма = {solution_fitness}".format(solution_fitness=solution_fitness))    
         print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))  
     # global pool
     # global model_params_lst
@@ -104,6 +103,7 @@ def evolution(X, y, models=None, task=None, num_generations=3):
         
     Path(os.path.join(MODELS_DIR,'{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)
     Path(os.path.join(METADATA_DIR,'{current_run_id}'.format(current_run_id=current_run_id))).mkdir(parents=True, exist_ok=True)   
+    print(u'Идентификатор эксперимента:', current_run_id)
     print('Current experiment:', current_run_id)                                            
     ga_instance = pygad.GA(num_generations=num_generations,
                         fitness_func=fitness_func,
@@ -127,7 +127,7 @@ def evolution(X, y, models=None, task=None, num_generations=3):
     ga_instance.run()
 
     solution, solution_fitness, solution_idx = ga_instance.best_solution()
-
+    print(u"Результат эволюции:")
     print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 

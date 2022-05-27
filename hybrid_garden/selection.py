@@ -4,7 +4,7 @@ import os
 import pickle
 from pathlib import Path
 
-import config as cfg
+from . import config as cfg
 
 
 MODELS_DIR = cfg.MODELS_DIR
