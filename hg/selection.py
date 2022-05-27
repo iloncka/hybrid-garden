@@ -83,9 +83,11 @@ def get_trees(current_run_id, n_trees, fitness_thresh):
     return (best_models, selected_metas)
 
 def get_best_tree(trees, best_solution, solution_idx):
+
     
     for tree, meta in trees:
         if (meta['solution'] == best_solution).all() and (meta['solution_idx'] == solution_idx).all():
             best_tree = tree
             best_meta = meta    
             return (best_tree, best_meta)
+
