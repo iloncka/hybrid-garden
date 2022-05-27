@@ -2,10 +2,10 @@
 name = "hybrid-garden"
 version = "0.1.0"
 description = ""
-authors = ["Ilona Kovaleva <ilona.kovaleva.ds@gmail.com>"]
+authors = ["Ilona Kovaleva <iloncka.ds@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.7"
 numpy = "^1.22.4"
 scikit-learn = "^1.1.1"
 pygad = "^2.16.3"
