@@ -2,7 +2,9 @@ import numpy as np
 import pandas as pd
 import sklearn
 import pygad
+
 import multiprocessing
+
 import time
 import uuid
 import pickle
@@ -125,12 +127,12 @@ def evolution(X, y, models=None, task=None, num_generations=3):
     ga_instance.run()
 
     solution, solution_fitness, solution_idx = ga_instance.best_solution()
+
     print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
-    
 
     # After the generations complete, some plots are showed that summarize how the outputs/fitness values evolve over generations.
     ga_instance.plot_result(title="Iteration vs. Fitness", linewidth=4)

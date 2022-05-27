@@ -79,3 +79,8 @@ class HybridGarden:
         return y_pred_proba
         
 
+if '__name__' == '__main__':
+    
+    
+    clf = HybridGarden()
+    print('ok')
