@@ -1,5 +1,9 @@
 import pandas as pd
+import numpy as np
 import os
+import pickle
+from pathlib import Path
+
 import config as cfg
 
 
@@ -18,12 +22,24 @@ def _create_plane_meta(nested_meta):
     return plane_meta
 
 def get_trees(current_run_id, n_trees, fitness_thresh):
-
-    REPORTS_DIR = os.path.join(REPORTS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
-    METADATA_DIR = os.path.join(METADATA_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
-    MODELS_DIR = os.path.join(MODELS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
     
-    meta_files = [name for name in os.listdir(METADATA_DIR) if os.path.isfile(os.path.join(meta_dir, name))]
+    global MODELS_DIR
+    global METADATA_DIR
+    global REPORTS_DIR
+    
+    if current_run_id not in MODELS_DIR:
+        MODELS_DIR = os.path.join(MODELS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
+        if not os.path.isdir(MODELS_DIR):     
+            Path(MODELS_DIR).mkdir(parents=True, exist_ok=True)
+        REPORTS_DIR = os.path.join(REPORTS_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
+        if not os.path.isdir(REPORTS_DIR):     
+            Path(REPORTS_DIR).mkdir(parents=True, exist_ok=True)
+        METADATA_DIR = os.path.join(METADATA_DIR, '{current_run_id}'.format(current_run_id=current_run_id))
+        if not os.path.isdir(METADATA_DIR):     
+            Path(METADATA_DIR).mkdir(parents=True, exist_ok=True)
+
+    
+    meta_files = [name for name in os.listdir(METADATA_DIR) if os.path.isfile(os.path.join(METADATA_DIR, name))]
     
     all_metas = []
     for filename in meta_files:
@@ -41,10 +57,13 @@ def get_trees(current_run_id, n_trees, fitness_thresh):
 
     unique_meta = [_create_plane_meta(meta) for meta in all_metas if meta['model_id'] in selected_models]
     unique_meta_df = pd.DataFrame(unique_meta)
-
-    best_fitness_list = unique_meta_df.sort_values(['fitness', 'test_precision'], ascending=False)[:n_trees].model_id.to_list()
-    best_precisions_list = unique_meta_df.sort_values(['test_precision', 'fitness'], ascending=False)[:n_trees].model_id.to_list()
-    best_recalls_list = unique_meta_df.sort_values(['test_recall', 'fitness'], ascending=False)[:n_trees].model_id.to_list()
+    
+    precision_mask = unique_meta_df.columns[unique_meta_df.columns.str.startswith('test_precision')].values[0]
+    recall_mask = unique_meta_df.columns[unique_meta_df.columns.str.startswith('test_recall')].values[0]
+    
+    best_fitness_list = unique_meta_df.sort_values(['fitness', precision_mask], ascending=False)[:n_trees].model_id.to_list()
+    best_precisions_list = unique_meta_df.sort_values([precision_mask, 'fitness'], ascending=False)[:n_trees].model_id.to_list()
+    best_recalls_list = unique_meta_df.sort_values([recall_mask, 'fitness'], ascending=False)[:n_trees].model_id.to_list()
     
     best_unique = set(best_fitness_list + best_precisions_list + best_recalls_list)
     unique_meta_df = unique_meta_df.loc[unique_meta_df.model_id.isin(best_unique)]
@@ -61,11 +80,12 @@ def get_trees(current_run_id, n_trees, fitness_thresh):
             model = pickle.load(f)
             best_models.append(model)
 
-    return best_models, selected_metas
+    return (best_models, selected_metas)
 
 def get_best_tree(trees, best_solution, solution_idx):
+    
     for tree, meta in trees:
-        if (meta['solution'] == best_solution) and (meta['solution_idx'] == solution_idx):
+        if (meta['solution'] == best_solution).all() and (meta['solution_idx'] == solution_idx).all():
             best_tree = tree
             best_meta = meta    
-            return best_tree, best_meta
+            return (best_tree, best_meta)
