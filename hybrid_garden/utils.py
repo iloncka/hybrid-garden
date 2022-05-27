@@ -3,7 +3,7 @@ import pickle
 from pathlib import Path
 
 import uuid
-import config as cfg
+from . import config as cfg
 
 
 

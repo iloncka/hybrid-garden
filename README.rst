@@ -13,5 +13,10 @@ Introduction / Введение
 
 This library is under development  
 
-Это прототип библиотеки hybrid-garden
+Это прототип библиотеки hybrid-garden. 
+
+Usage / Пример использования
+============================
+
+Пример использования: https://colab.research.google.com/drive/1XezOULegGHsuPesY3Qr21acx7UU1Ss3w?usp=sharing
 

@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "hybrid-garden"
-version = "0.1.0"
+version = "0.1.2"
 description = ""
 authors = ["Ilona Kovaleva <iloncka.ds@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.7"
-numpy = "^1.22.4"
-scikit-learn = "^1.1.1"
+python = ">=3.7,<3.11"
+numpy = "^1.20.0"
+scikit-learn = "^1.0.2"
 pygad = "^2.16.3"
 pmlb = "^1.0.1"
 randomname = "^0.1.5"
